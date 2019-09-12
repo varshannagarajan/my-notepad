@@ -1,12 +1,62 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>My Web Page</title>
-    </head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css"
+    />
+    <title>My First Notepad!</title>
+  </head>
 
-    <body>
-        <!-- This is a comment -->
-        <h1>Hello World!</h1>
-    </body>
+  <div class="jumbotron text-center">
+    <h1>My First Notepad!</h1>
+    <h4>
+      Feel free to type whatever you like, your work will be saved every 10
+      seconds automatically or hit the save button!
+    </h4>
+  </div>
+
+  <body>
+    <div class="paper container">
+      <div class="row">
+        <div class="col-md-8">
+          <!-- This is a comment -->
+          <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+          <script>
+            const fs = new Filer.FileSystem();
+            window.addEventListener("DOMContentLoaded", event => {
+              fs.readFile("/note", "utf8", function(err, data) {
+                if (err) {
+                  document.querySelector("#note").innerHTML =
+                    "Start typing here:";
+                }
+                if (data) {
+                  document.querySelector("#note").innerHTML = data;
+                }
+              });
+              setInterval(writeToFile, 10000);
+            });
+
+            function writeToFile() {
+              fs.writeFile(
+                "/note",
+                document.querySelector("#note").innerHTML,
+                "utf8",
+                function(err) {
+                  if (err) throw err;
+                }
+              );
+            }
+          </script>
+          <div id="note" contenteditable></div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <button onclick="writeToFile()" class="btn-success">Save</button>
+      </div>
+    </div>
+  </body>
 </html>
