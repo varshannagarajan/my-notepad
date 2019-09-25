@@ -50,12 +50,25 @@
                 }
               );
             }
+
+            function clearNote() {
+              fs.writeFile(
+                "/note",
+                "",
+                "utf8",
+                function(err) {
+                  if (err) throw err;
+                  else document.querySelector("#note").innerHTML = "";
+                }
+              );
+            }
           </script>
           <div id="note" contenteditable></div>
         </div>
       </div>
       <div class="col-md-4">
         <button onclick="writeToFile()" class="btn-success">Save</button>
+        <button onclick="clearNote()" class="btn-success">Clear</button>
       </div>
     </div>
   </body>
