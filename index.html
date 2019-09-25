@@ -50,12 +50,19 @@
                 }
               );
             }
+            function deleteFile() {
+
+              fs.writeFile('/note', '', function(){console.log('file empty')})
+              document.querySelector("#note").innerHTML = "";
+              
+            }
           </script>
           <div id="note" contenteditable></div>
         </div>
       </div>
       <div class="col-md-4">
         <button onclick="writeToFile()" class="btn-success">Save</button>
+        <button onclick="deleteFile()" class="btn-success">Clear</button>
       </div>
     </div>
   </body>
